@@ -95,7 +95,7 @@ public class ReqresInTests {
     }
 
     @Test
-    public void getSingleResourse() {
+    public void getSingleResourseYear() {
         Integer expectedYear = 2001;
         Integer actualYear = given()
                 .log().uri()
@@ -109,6 +109,21 @@ public class ReqresInTests {
         assertEquals(expectedYear, actualYear);
 
 
+    }
+
+    @Test
+    public void getSingleResourseColor() {
+        String expectedColor = "#C74375";
+        String actualColor = given()
+                .log().body()
+                .when()
+                .get(url + "/api/unknown/2")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .extract()
+                .path("data.color");
+        assertEquals(expectedColor, actualColor);
     }
 
 }
