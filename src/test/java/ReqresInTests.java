@@ -6,16 +6,14 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class ReqresInTests {
-    String url = "https://reqres.in";
-
+public class ReqresInTests extends TestBase {
     @Test
     public void singleUserNotFound() {
         given()
                 .log().uri()
                 .log().body()
                 .when()
-                .get("https://reqres.in/api/users/23")
+                .get("/api/users/23")
                 .then()
                 .log().all()
                 .statusCode(404);
@@ -28,7 +26,7 @@ public class ReqresInTests {
                 .log().body()
                 .contentType(JSON)
                 .when()
-                .get(url + "/api/users?page=2")
+                .get("/api/users?page=2")
                 .then()
                 .log().all()
                 .statusCode(200)
@@ -43,7 +41,7 @@ public class ReqresInTests {
                 .contentType(JSON)
                 .body("{ \"name\": \"morpheus\"}")
                 .when()
-                .post(url + "/api/users")
+                .post("/api/users")
                 .then()
                 .log().all()
                 .statusCode(201)
@@ -58,7 +56,7 @@ public class ReqresInTests {
                 .log().body()
                 .contentType(JSON)
                 .when()
-                .delete(url + "/api/users/2")
+                .delete("/api/users/2")
                 .then()
                 .log().all()
                 .statusCode(204);
@@ -72,7 +70,7 @@ public class ReqresInTests {
                 .contentType(JSON)
                 .body("{ \"name\": \"morpheus\",\"job\": \"zion resident\"}")
                 .when()
-                .patch(url + "/api/users/2")
+                .patch("/api/users/2")
                 .then()
                 .log().all()
                 .statusCode(200)
@@ -87,7 +85,7 @@ public class ReqresInTests {
                 .contentType(JSON)
                 .body("{\"email\": \"peter@klaven\"}")
                 .when()
-                .post(url + "/api/login")
+                .post("/api/login")
                 .then()
                 .statusCode(400)
                 .body("error", is("Missing password"));
@@ -100,7 +98,7 @@ public class ReqresInTests {
         Integer actualYear = given()
                 .log().uri()
                 .when()
-                .get(url + "/api/unknown/2")
+                .get("/api/unknown/2")
                 .then()
                 .log().body()
                 .statusCode(200)
@@ -117,7 +115,7 @@ public class ReqresInTests {
         String actualColor = given()
                 .log().body()
                 .when()
-                .get(url + "/api/unknown/2")
+                .get("/api/unknown/2")
                 .then()
                 .log().all()
                 .statusCode(200)
